@@ -30,6 +30,7 @@ models/*
 Thumbs.db
 .idea/
 .vscode/
+.claude/
 
 # Native/binary artifacts
 *.dll
