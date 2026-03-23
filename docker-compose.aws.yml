@@ -1,0 +1,14 @@
+services:
+  predictivo:
+    build: .
+    container_name: predictivo-acciones
+    ports:
+      - "80:8000"
+    volumes:
+      - ./models:/app/models
+      - ./outputs:/app/outputs
+    environment:
+      # Free tier friendly: aprendizaje continuo pero con menor carga de CPU.
+      - TRAIN_INTERVAL_HOURS=6
+      - API_PORT=8000
+    restart: unless-stopped

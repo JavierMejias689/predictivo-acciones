@@ -1,0 +1,87 @@
+  INFRAESTRUCTURA TI | UNIDAD 1 SEMANA 3
+
+
+
+ DE LA CAPA DE ENLACE A LA COMUNICACIÓN REAL
+ Apunte corto y claro: qué pasa en una red local cuando se envían datos, cómo entra ARP en
+ juego y cuándo conviene usar UTP, fibra, WiFi o satélite.
+
+
+
+
+ CAPA DE ENLACE (OSI 2)
+    Aquí ya no se mueven paquetes IP: lo que viaja son tramas.
+    Para entregar dentro de la LAN manda la MAC, no la IP.
+    El campo CRC/FCS revisa integridad; si la trama llega con error, se descarta.
+    En caso de fallas de capa 2, arriba suele verse como intermitencia o pérdida de servicio.
+    Detalle técnico clave: en Ethernet el estándar base es IEEE 802.3 y la MTU típica de capa 2 es 1500 bytes.
+
+   Tip de diagnóstico: si un ping no responde, primero revisa gateway, estado físico del enlace y resolución ARP antes de escalar al proveedor.
+
+
+
+
+ ETHERNET Y ARP                                                                                                                                   PROTOCOLOS Y ENCAPSULACIÓN
+    Ethernet es la base de la LAN cableada (formato de trama y control de acceso al medio).                                                          El recorrido es: Datos -> Segmento -> Paquete IP -> Trama ->
+    ARP traduce IP a MAC dentro de la red local.                                                                                                     Bits.
+    Cuando el destino está fuera de la red local, ARP resuelve la MAC del gateway.                                                                   En destino se desarma al revés (desencapsulación).
+    TCP asegura entrega y orden; UDP reduce sobrecarga y latencia al no confirmar recepción.                                                         Si una capa falla, el efecto aparece arriba como degradación del
+                                                                                                                                                     servicio.
+
+
+
+
+ IMPACTO EN INFRAESTRUCTURA TI
+    VLAN ayuda a separar tráfico y mantener la red más ordenada.
+    No siempre conviene la mayor velocidad nominal: también importan costo total y estabilidad.
+    UTP en acceso local suele rendir muy bien en costo/beneficio.
+    Cuando segmentas con VLAN, el etiquetado IEEE 802.1Q ayuda a separar tráfico sin duplicar infraestructura.
+    Fibra para troncales y distancias largas.
+    WiFi es apropiado cuando la movilidad es requisito, considerando interferencias y densidad de usuarios.
+    La decisión final debe responder a la necesidad real del lugar, no solo a la ficha técnica.
+
+
+
+
+FLUJO DE ENCAPSULACIÓN TCP/IP
+                 APLICACIÓN                                    TRANSPORTE                                       INTERNET                                      ACCESO RED                                         FÍSICA
+        Genera datos (HTTP, DNS, etc.)      ➜       TCP/UDP agrega puertos y control        ➜      IP agrega dirección origen y destino    ➜          Ethernet/WiFi crea la trama         ➜       Transmite bits por señal eléctrica,
+                                                                                                                                                                                                            óptica o radio
+
+
+
+
+                                                            ARP Request (broadcast)
+                           Host A                                                                               Switch                                                                            Gateway
+                     IP 192.168.1.10                                                                               LAN                                                                           192.168.1.1
+
+                                                                                                                                                  ARP Reply (unicast)
+
+
+
+
+MEDIO                   VELOCIDAD TÍPICA             COSTO           FIABILIDAD      USO RECOMENDADO                       ¿CUÁNDO LO USARÍA YO?
+
+
+UTP (Cat6/6a)           1-10 Gb/s                    Bajo-           Alta            LAN de oficinas y campus              Para una sala de servidores de una PYME donde los equipos estén a menos de 90 m (100 m total de
+                                                     Medio                                                                 canal).
+
+Fibra óptica            1-400+ Gb/s                  Medio-Alto      Muy alta        Data Center, ISP                      Para backbone entre pisos/edificios, especialmente si hay ruido eléctrico o distancias largas.
+
+WiFi                    100 Mb/s a varios            Bajo-           Media           Movilidad en hogar/empresa            Cuando necesito movilidad real y la densidad de usuarios permite mantener buena cobertura.
+(802.11ac/ax)           Gb/s                         Medio
+
+Satélite                Decenas a cientos            Alto            Media           Zonas remotas sin red                 Si no hay alternativa terrestre disponible y se prioriza cobertura sobre latencia.
+                        Mb/s                                                         terrestre
+
+
+
+CONCLUSIÓN
+Sin una capa de enlace funcional (la cual es la base), las capas superiores no tienen viabilidad para funcionar. La elección del medio físico debe responder al contexto de la red, el cual es la
+distancia, el presupuesto y el tipo de uso, no a una preferencia por la tecnología que sea más nueva.
+
+
+
+Referencias (APA 7, material del curso): Universidad San Sebastián. (2026). TS_U1_S3: Taller sumativo, Protocolos Ethernet y ARP. | Universidad San Sebastián. (2026). PPT_INT_U1_S2: Comunicación y medios en infraestructura TI. |
+Universidad San Sebastián. (2026). APUNTE_U1_S2_INFRATI: Fundamentos de Infraestructura TI. | Universidad San Sebastián. (2026). Rúbrica_U1_S3.
+

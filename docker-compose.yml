@@ -1,0 +1,19 @@
+services:
+  predictivo:
+    build: .
+    container_name: predictivo-acciones
+    ports:
+      - "9090:8000"
+    volumes:
+      # Persistir modelos y datos entre reinicios
+      - ./models:/app/models
+      - ./outputs:/app/outputs
+    environment:
+      # Entrenar cada 1 hora para aprendizaje agresivo
+      - TRAIN_INTERVAL_HOURS=1
+      - API_PORT=8000
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 6G
